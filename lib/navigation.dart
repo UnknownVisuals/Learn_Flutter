@@ -3,6 +3,7 @@ import 'package:learn_flutter/home_page.dart';
 import 'package:learn_flutter/notification_page.dart';
 import 'package:learn_flutter/profile_card.dart';
 import 'package:learn_flutter/search_page.dart';
+import 'package:learn_flutter/setting_page.dart';
 
 class Navigation extends StatefulWidget {
   const Navigation({super.key});
@@ -12,29 +13,43 @@ class Navigation extends StatefulWidget {
 }
 
 class _NavigationState extends State<Navigation> {
-  int _currentIndex = 0;
+  int _index = 0;
 
-  final List<Widget> _pages = const [
-    HomePage(),
-    SearchPage(),
-    ProfileCard(),
+  final List<Widget> _pages = [
+    const HomePage(),
+    const SearchPage(),
+    const ProfileCard(),
+    const SettingPage(),
   ];
 
-  final List<String> _titles = const [
-    'Home Page',
-    'Search Page',
-    'Profile Card',
+  final List<String> _titles = [
+    'Home',
+    'Search',
+    'Profile',
+    'Settings',
   ];
+
+  void _pindahPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const NotificationPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titles[_currentIndex]),
+        leading: IconButton(
+          onPressed: _pindahPage,
+          icon: const Icon(Icons.notifications),
+        ),
+        title: Text(_titles[_index]),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
             onPressed: () {
               Navigator.push(
                 context,
@@ -43,27 +58,38 @@ class _NavigationState extends State<Navigation> {
                 ),
               );
             },
+            icon: const Icon(Icons.notifications),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SettingPage(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.settings),
           ),
         ],
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
+      ),
+      body: IndexedStack(
+        index: _index,
+        children: _pages,
       ),
       bottomNavigationBar: NavigationBar(
         destinations: const [
           NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
           NavigationDestination(icon: Icon(Icons.search), label: 'Search'),
           NavigationDestination(icon: Icon(Icons.person), label: 'Profile'),
+          NavigationDestination(icon: Icon(Icons.settings), label: 'Settings'),
         ],
-        selectedIndex: _currentIndex,
+        selectedIndex: _index,
         onDestinationSelected: (index) {
           setState(() {
-            _currentIndex = index;
+            _index = index;
           });
         },
-      ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: _pages,
       ),
     );
   }

@@ -10,9 +10,17 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Home Page'),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            ListTile(
+              title: const Text('Nama: Reynaldhi'),
+              subtitle: const Text('Hobi: Membaca'),
+              tileColor: Colors.deepPurpleAccent.withValues(alpha: 0.1),
+            ),
+          ],
+        ),
       ),
     );
   }
