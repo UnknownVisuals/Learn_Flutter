@@ -1,37 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/navigation.dart';
+import 'package:learn_flutter/authentication.dart';
+import 'package:learn_flutter/signup_page.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class SigninPage extends StatefulWidget {
+  const SigninPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<SigninPage> createState() => _SigninPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _SigninPageState extends State<SigninPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-  void _loginAuth() {
-    final email = _emailController.text;
-    final password = _passwordController.text;
-
-    if (email == 'reynaldhi@imvlaboratory.id' && password == '12345678') {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const Navigation(),
-        ),
-      );
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Login failed'),
-          backgroundColor: Colors.deepPurple,
-        ),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +66,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 32),
                 ElevatedButton(
-                  onPressed: _loginAuth,
+                  onPressed: () async {
+                    await Authentication.signIn(
+                      context: context,
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
+                  },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     backgroundColor: Colors.deepPurple,
@@ -100,6 +86,31 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                OutlinedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const SignupPage(),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: const Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepPurpleAccent,
                     ),
                   ),
                 ),
