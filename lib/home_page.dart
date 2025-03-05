@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'crud.dart'; // Import CRUD class
+import 'logic/crud.dart'; // Import CRUD class
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
