@@ -1,29 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// Model untuk ProfileAssisten
-class ProfileAssistenModel {
-  final String uid;
-  final String nama, email, hobi;
-
-  ProfileAssistenModel({
-    required this.uid,
-    required this.nama,
-    required this.email,
-    required this.hobi,
-  });
-
-  // Konversi dari Firestore Document ke Model
-  factory ProfileAssistenModel.fromSnapshot(DocumentSnapshot snapshot) {
-    final data = snapshot.data() as Map<String, dynamic>;
-    return ProfileAssistenModel(
-      uid: snapshot.id,
-      nama: data['nama'],
-      email: data['email'],
-      hobi: data['hobi'],
-    );
-  }
-}
-
 // CRUD Class
 class CRUD {
   static final firebase = FirebaseFirestore.instance;
