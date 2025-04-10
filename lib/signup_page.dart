@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/logic/authentication.dart';
+import 'package:learn_flutter/logic/authentication_firebase.dart';
+import 'package:learn_flutter/logic/authentication_supabase.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -66,11 +67,26 @@ class _SignupPageState extends State<SignupPage> {
                 const SizedBox(height: 32),
                 ElevatedButton(
                   onPressed: () async {
-                    await Authentication.createAccount(
-                      context: context,
+                    final success = await AuthenticationSupabase.signUp(
                       email: _emailController.text,
                       password: _passwordController.text,
                     );
+
+                    if (success) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              'Please check your email to confirm your account'),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              'Failed to create account. Please try again.'),
+                        ),
+                      );
+                    }
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),

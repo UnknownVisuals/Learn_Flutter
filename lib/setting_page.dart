@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:learn_flutter/logic/authentication.dart';
+import 'package:learn_flutter/logic/authentication_firebase.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
